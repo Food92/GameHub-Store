@@ -13,6 +13,7 @@ target/
 *.iml
 *.ipr
 
+
 ### Eclipse ###
 .apt_generated
 .classpath
@@ -35,5 +36,9 @@ build/
 ### VS Code ###
 .vscode/
 
+# Ignorar archivos de H2
+*.mv.db
+*.trace.db
+/data/
 ### Mac OS ###
 .DS_Store
