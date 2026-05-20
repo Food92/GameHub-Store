@@ -58,28 +58,56 @@ public class ProductServiceImpl implements ProductService {
     public Product save(Product product) {
         // Validar duplicado por nombre
         if (productRepository.existsByNombreProduct(product.getNombreProduct())) {
-            throw new ProductException("Ya existe un producto con el nombre: " + product.getNombreProduct());
+            throw new ProductException(
+                    "El producto '" + product.getNombreProduct() + "' ya está registrado en el catálogo. " +
+                            "Por favor, utilice otro nombre o edite el existente."
+            );
         }
+
 
         // Validar precio
         if (product.getPrecio() == null || product.getPrecio() <= 0) {
             throw new ProductException("El precio del producto debe ser mayor a 0");
         }
 
-        // Validar categoría via CategoryClient
+        // Validar categoría
         if (product.getIdCategory() == null) {
             throw new ProductException("El producto debe tener una categoría asignada");
         }
-        CategoryDTO  DTO = categoryClient.findById(product.getIdCategory());
-        if(DTO==null) {
-            throw new ProductException("La categoria no existe en el sistema");
-        }
-        if("INACTIVA".equals(DTO.getEstado())) {
-            throw new ProductException("La categoria no se puede estar inactiva");
+
+        // Consultar categoría vía CategoryClient
+        CategoryDTO dto = categoryClient.findById(product.getIdCategory());
+        if (dto == null) {
+            throw new ProductException("La categoría no existe en el sistema");
         }
 
+        // Validar estado de la categoría
+        if ("INACTIVA".equalsIgnoreCase(dto.getEstado())) {
+            throw new ProductException("No se puede asignar producto a una categoría inactiva");
+        }
+
+        // Validar marca y modelo
+        if (product.getMarca() == null || product.getMarca().isBlank()) {
+            throw new ProductException("El campo marca no puede estar vacío");
+        }
+        if (product.getModelo() == null || product.getModelo().isBlank()) {
+            throw new ProductException("El campo modelo no puede estar vacío");
+        }
+
+        // Validar descripción
+        if (product.getDescripcion() == null || product.getDescripcion().isBlank()) {
+            throw new ProductException("La descripción del producto no puede estar vacía");
+        }
+
+        // Validar estado (activo/inactivo)
+        if (product.getEstado() == null) {
+            throw new ProductException("El estado del producto no puede ser nulo");
+        }
+
+        // Guardar producto
         return productRepository.save(product);
     }
+
 
 
 
@@ -122,15 +150,15 @@ public class ProductServiceImpl implements ProductService {
     public void desactivar(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ProductException("El producto con id " + id + " no existe"));
-        product.setEstado(false);
+
+        product.setEstado(Product.EstadoProducto.INACTIVO); // 👈 ahora usas el enum
         productRepository.save(product);
     }
 
 
 
 
-
-    @Transactional(readOnly = true)
+        @Transactional(readOnly = true)
     @Override
     public List<Product> findByMarca(String marca) {
         return productRepository.findByMarca(marca);

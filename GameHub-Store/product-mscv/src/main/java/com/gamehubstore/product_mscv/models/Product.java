@@ -44,9 +44,17 @@ public class Product {
     @Column(nullable = false)
     private String descripcion;
 
-    @NotNull(message = "El estado no puede ser nulo")
+    public enum EstadoProducto {
+        ACTIVO,
+        INACTIVO
+    }
+
+
+
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Boolean estado;
+    private EstadoProducto estado;
+
 
     @Embedded
     private Audit audit=new Audit();

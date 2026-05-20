@@ -1,6 +1,7 @@
-package com.gamehubstore.product_mscv.models.dtos;
+package com.gamehubstore.inventory_mscv.models.dtos;
 
-import com.gamehubstore.product_mscv.models.Product;
+
+import com.gamehubstore.inventory_mscv.models.Inventario;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,5 +19,5 @@ public class ProductDTO {
     private Double precio;
     private  Long idCategory;
     private String descripcion;
-    private Product.EstadoProducto estado;
+    private Inventario.EstadoProducto estado;
 }

@@ -19,7 +19,7 @@ public class DireccionController {
 
     // Crear dirección para un usuario
     @PostMapping
-    public ResponseEntity<DireccionDTO> save (
+    public ResponseEntity<DireccionDTO> save(
             @PathVariable Long userId,
             @RequestBody @Valid DireccionDTO direccionDTO) {
         direccionDTO.setUserId(userId); // asignar el userId desde la URL
@@ -35,9 +35,10 @@ public class DireccionController {
     }
 
     // Eliminar dirección por ID
+    // Eliminar dirección por ID
     @DeleteMapping("/{direccionId}")
-    public ResponseEntity<Void> eliminarDireccion(@PathVariable Long direccionId) {
+    public ResponseEntity<String> eliminarDireccion(@PathVariable Long direccionId) {
         direccionService.delete(direccionId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("La dirección con ID " + direccionId + " fue eliminada correctamente.");
     }
 }
