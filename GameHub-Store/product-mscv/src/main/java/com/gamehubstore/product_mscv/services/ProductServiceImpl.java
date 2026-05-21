@@ -30,6 +30,7 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll().stream().map(p -> {
             ProductDTO dto = new ProductDTO();
             dto.setIdProduct(p.getIdProduct());
+            dto.setIdCategory(p.getIdCategory());
             dto.setNombreProduct(p.getNombreProduct());
             dto.setModelo(p.getModelo());
             dto.setPrecio(p.getPrecio());
