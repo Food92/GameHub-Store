@@ -22,36 +22,38 @@ public class PaymentServiceImpl implements PaymentService{
     @Autowired
     private OrderClient orderClient;
 
+
     @Override
     public Payment save(PaymentDTO paymentDTO) {
-        //Validar un orden
-        OrderDTO order= orderClient.getOrderById(paymentDTO.getOrderId());
-        if(order==null){
-            throw  new PaymentException("Order no existe");
+        // Validar orden
+        OrderDTO order = orderClient.getOrderById(paymentDTO.getOrderId());
+        if (order == null) {
+            throw new PaymentException("Order no existe");
         }
 
-        //Validar el monto
-        if(!order.getTotal().equals(paymentDTO.getMonto())){
-            throw  new PaymentException("El monto no coincide con el total de la orden");
+        // Validar monto
+        if (!order.getTotal().equals(paymentDTO.getMonto())) {
+            throw new PaymentException("El monto no coincide con el total de la orden");
         }
 
-        //Evitar duplicados
-        if(paymentRepository.findByOrderId(paymentDTO.getOrderId())
-                .stream().anyMatch(p-> "APROBADO".equals(p.getEstadoPago()))) {
+        // Evitar duplicados
+        if (paymentRepository.findByOrderId(paymentDTO.getOrderId())
+                .stream().anyMatch(p -> "APROBADO".equals(p.getEstadoPago()))) {
             throw new RuntimeException("Ya existe un pago aprobado para esta orden");
         }
 
-        //Crear un pago
-        Payment payment=new Payment();
-        payment.setPaymentId(paymentDTO.getOrderId());
+        // Crear pago
+        Payment payment = new Payment();
+        payment.setOrderId(paymentDTO.getOrderId());   // 👈 aquí va orderId, no paymentId
         payment.setMonto(paymentDTO.getMonto());
         payment.setTipoPago(paymentDTO.getTipoPago());
-        payment.setEstadoPago("APROBADO");
+        payment.setEstadoPago(paymentDTO.getEstadoPago());
         payment.setCodigoPago(UUID.randomUUID().toString());
         payment.setFechaPago(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
 
         return paymentRepository.save(payment);
     }
+
 
 
 
@@ -103,6 +105,7 @@ public class PaymentServiceImpl implements PaymentService{
         existing.setEstadoPago("CANCELADO");
         return paymentRepository.save(existing);
     }
+
 
 
     public List<Payment> findAll() {
