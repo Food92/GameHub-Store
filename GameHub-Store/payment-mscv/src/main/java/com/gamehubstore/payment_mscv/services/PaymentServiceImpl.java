@@ -84,17 +84,23 @@ public class PaymentServiceImpl implements PaymentService{
                 ()-> new  PaymentException("Payment no encontrado"));
     }
 
-
-
     @Override
     public Payment updatepayment(String estadoPago, Long paymentId) {
-        Payment existing = paymentRepository.findById(paymentId)
-                .orElseThrow(() -> new PaymentException("Payment no encontrado"));
+        Payment pago = paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new PaymentException("Pago no encontrado"));
 
-        existing.setEstadoPago(estadoPago);
-        return paymentRepository.save(existing);
+        pago.setEstadoPago(estadoPago);
+        Payment actualizado = paymentRepository.save(pago);
+
+        // ✅ Notificar al order-service
+        if ("APROBADO".equals(estadoPago)) {
+            orderClient.updateEstado(pago.getOrderId(), "PAGADA");
+        } else if ("RECHAZADO".equals(estadoPago)) {
+            orderClient.updateEstado(pago.getOrderId(), "RECHAZADA");
+        }
+
+        return actualizado;
     }
-
 
 
     @Override

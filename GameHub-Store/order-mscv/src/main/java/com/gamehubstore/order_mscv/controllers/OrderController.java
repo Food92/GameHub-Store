@@ -20,10 +20,11 @@ public class OrderController {
 
     // 🟢 Crear orden
     @PostMapping
-    public ResponseEntity<Order> create(@Valid @RequestBody OrderDTO dto) {
-        Order saved = orderService.save(dto);
+    public ResponseEntity<OrderDTO> create(@Valid @RequestBody OrderDTO dto) {
+        OrderDTO saved = orderService.save(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
+
 
     // 🟡 Actualizar orden
     @PutMapping("/{orderId}")
@@ -34,10 +35,11 @@ public class OrderController {
 
     // 🔵 Buscar por ID
     @GetMapping("/{orderId}")
-    public ResponseEntity<Order> findById(@PathVariable Long orderId) {
-        Order order = orderService.findById(orderId);
-        return ResponseEntity.ok(order);
+    public ResponseEntity<OrderDTO> findById(@PathVariable Long orderId) {
+        OrderDTO dto = orderService.findByIdDTO(orderId);
+        return ResponseEntity.ok(dto);
     }
+
 
     // 🟣 Listar todas
     @GetMapping
@@ -54,10 +56,11 @@ public class OrderController {
     }
 
     // 🔴 Listar por estado
-    @GetMapping("/estado/{estado}")
-    public ResponseEntity<List<Order>> findByEstado(@PathVariable String estado) {
-        List<Order> orders = orderService.findByEstado(estado);
-        return ResponseEntity.ok(orders);
+    @PutMapping("/{orderId}/estado")
+    public ResponseEntity<OrderDTO> updateEstado(@PathVariable Long orderId,
+                                                 @RequestParam String estado) {
+        OrderDTO actualizado = orderService.updateEstado(orderId, estado);
+        return ResponseEntity.ok(actualizado);
     }
 
     // ⚫ Cancelar orden
@@ -66,4 +69,6 @@ public class OrderController {
         Order canceled = orderService.cancelOrder(orderId);
         return ResponseEntity.ok(canceled);
     }
+
+
 }

@@ -16,15 +16,26 @@ import java.util.List;
 @NoArgsConstructor
 
 public class OrderDTO {
+
+
+    private Long orderId;
+
+    @NotNull
+    @PositiveOrZero
     @NotNull
     private Long userId;
 
     @PositiveOrZero
     private Double descuento; // opcional
 
-
     @NotBlank(message = "El estado no puede ser vacío")
     private String estado;
+
+    @PositiveOrZero
+    private Double subtotal; //
+
+    @PositiveOrZero
+    private Double total; //
 
     @NotNull
     private List<DetailOrderDTO> details;

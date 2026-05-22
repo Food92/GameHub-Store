@@ -39,6 +39,6 @@ public class DetailOrder {
     @NotNull(message = "El precio unitario es obligatorio")
     @Positive(message = "El precio unitario debe ser mayor a 0")
     @Column(nullable = false)
-    private Double preciUnitario;
+    private Double precioUnitario;
 
 }

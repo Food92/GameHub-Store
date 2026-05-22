@@ -9,6 +9,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Setter
@@ -48,6 +49,10 @@ public class Order {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @PastOrPresent
     private LocalDateTime fecha;
+
+
+    @Transient // si no quieres que JPA lo persista
+    private List<DetailOrder> details;
 
     private Audit audit = new Audit();
 
