@@ -1,4 +1,4 @@
-package com.gamehubstore.user_mscv.controllers;
+package com.gamehubstore.warranty_mscv.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -10,8 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
-public class ApiException {
-
+public class ApiExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -20,5 +19,4 @@ public class ApiException {
         }
         return ResponseEntity.badRequest().body(errors);
     }
-
 }
