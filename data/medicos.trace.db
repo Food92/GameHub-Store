@@ -1,0 +1,16 @@
+2026-05-19 22:05:44.796976-04:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Conversión de datos fallida, convirtiendo "TRUE (PRODUCTS_COPY_3_0: ""ESTADO"" ENUM('ACTIVO', 'INACTIVO') NOT NULL)"
+Data conversion error converting "TRUE (PRODUCTS_COPY_3_0: ""ESTADO"" ENUM('ACTIVO', 'INACTIVO') NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."PRODUCTS_COPY_3_0"("ID_PRODUCT", "CREATES_AT", "UPDATED_AT", "DESCRIPCION", "ESTADO", "ID_CATEGORY", "MARCA", "MODELO", "NOMBRE_PRODUCT", "PRECIO") OVERRIDING SYSTEM VALUE SELECT "ID_PRODUCT", "CREATES_AT", "UPDATED_AT", "DESCRIPCION", "ESTADO", "ID_CATEGORY", "MARCA", "MODELO", "NOMBRE_PRODUCT", "PRECIO" FROM "PUBLIC"."PRODUCTS" [22018-240]
+2026-05-19 22:07:39.982745-04:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Conversión de datos fallida, convirtiendo "'ACTIVO' (PRODUCTS: ""ESTADO"" BOOLEAN NOT NULL)"
+Data conversion error converting "'ACTIVO' (PRODUCTS: ""ESTADO"" BOOLEAN NOT NULL)"; SQL statement:
+insert into products (creates_at,updated_at,descripcion,estado,id_category,marca,modelo,nombre_product,precio,id_product) values (?,?,?,?,?,?,?,?,?,default) [22018-240]
+2026-05-19 22:09:04.071069-04:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Conversión de datos fallida, convirtiendo "'ACTIVO' (PRODUCTS: ""ESTADO"" BOOLEAN NOT NULL)"
+Data conversion error converting "'ACTIVO' (PRODUCTS: ""ESTADO"" BOOLEAN NOT NULL)"; SQL statement:
+insert into products (creates_at,updated_at,descripcion,estado,id_category,marca,modelo,nombre_product,precio,id_product) values (?,?,?,?,?,?,?,?,?,default) [22018-240]
+2026-05-19 22:10:49.025611-04:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Conversión de datos fallida, convirtiendo "TRUE (PRODUCTS_COPY_3_0: ""ESTADO"" ENUM('ACTIVO', 'INACTIVO') NOT NULL)"
+Data conversion error converting "TRUE (PRODUCTS_COPY_3_0: ""ESTADO"" ENUM('ACTIVO', 'INACTIVO') NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."PRODUCTS_COPY_3_0"("ID_PRODUCT", "CREATES_AT", "UPDATED_AT", "DESCRIPCION", "ESTADO", "ID_CATEGORY", "MARCA", "MODELO", "NOMBRE_PRODUCT", "PRECIO") OVERRIDING SYSTEM VALUE SELECT "ID_PRODUCT", "CREATES_AT", "UPDATED_AT", "DESCRIPCION", "ESTADO", "ID_CATEGORY", "MARCA", "MODELO", "NOMBRE_PRODUCT", "PRECIO" FROM "PUBLIC"."PRODUCTS" [22018-240]
