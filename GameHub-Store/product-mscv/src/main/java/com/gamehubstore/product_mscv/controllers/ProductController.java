@@ -4,6 +4,9 @@ import com.gamehubstore.product_mscv.models.Product;
 import com.gamehubstore.product_mscv.models.dtos.ProductDTO;
 import com.gamehubstore.product_mscv.repositories.ProductRepository;
 import com.gamehubstore.product_mscv.services.ProductService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+@Tag(name = "Productos", description = "Gestión del catálogo global de videojuegos de GameHub Store")
+@SecurityRequirement(name = "bearer-jwt")
 @RestController
 @RequestMapping("/api/v1/products")
 public class ProductController {
@@ -19,7 +25,7 @@ public class ProductController {
 
     //Crear un producto
     @PostMapping
-    public ResponseEntity<Product> save(@RequestBody Product product) {
+    public ResponseEntity<Product> save(@RequestBody @Valid Product product) {
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(product));
     }
 

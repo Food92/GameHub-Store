@@ -3,6 +3,8 @@ package com.gamehubstore.user_mscv.controllers;
 import com.gamehubstore.user_mscv.models.User;
 import com.gamehubstore.user_mscv.models.dtos.UserDTO;
 import com.gamehubstore.user_mscv.services.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
+@Tag(name = "Usuarios - Clientes", description = "Endpoints para la gestión de datos personales de la comunidad Gamer")
+@SecurityRequirement(name = "bearer-jwt")
 @RequestMapping("/api/v1/users")
 
 public class UserController {

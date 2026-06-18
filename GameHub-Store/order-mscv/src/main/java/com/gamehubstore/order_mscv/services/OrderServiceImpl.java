@@ -178,15 +178,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+
     @Override
+    @org.springframework.security.access.prepost.PreAuthorize("hasAnyRole('ADMIN', 'VENDEDOR')") // 👈 Corrección: Protege la lógica interna
     public OrderDTO updateEstado(Long orderId, String estado) {
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new OrderException("Orden no encontrada"));
+                .orElseThrow(() -> new OrderException("Orden no encontrada con ID: " + orderId));
+
+        // Regla de negocio opcional para la tienda gamer:
+        // Si el vendedor cancela, se podría reponer el stock en inventario_mscv usando WebClient/Feign.
 
         order.setEstado(estado);
         Order actualizado = orderRepository.save(order);
 
-        // ✅ Crear el DTO
+        // Crear el DTO de respuesta
         OrderDTO dto = new OrderDTO();
         dto.setOrderId(actualizado.getOrderId());
         dto.setUserId(actualizado.getUserId());
@@ -195,7 +200,7 @@ public class OrderServiceImpl implements OrderService {
         dto.setDescuento(actualizado.getDescuento());
         dto.setTotal(actualizado.getTotal());
 
-        // 🔴 Cargar los detalles desde el repositorio
+        // Cargar los detalles desde el repositorio
         List<DetailOrder> detalles = detailOrderRepository.findByOrderId(actualizado.getOrderId());
 
         List<DetailOrderDTO> detallesDTO = detalles.stream()
@@ -210,7 +215,6 @@ public class OrderServiceImpl implements OrderService {
 
         dto.setDetails(detallesDTO);
 
-        // ✅ Return final
         return dto;
     }
 

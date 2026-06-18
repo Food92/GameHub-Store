@@ -13,6 +13,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @NoArgsConstructor
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -49,6 +50,7 @@ public class User {
     @Column(nullable = false)
     private Boolean estado=true;
 
+    @Embedded
     private Audit audit = new Audit();
 
 }

@@ -3,6 +3,8 @@ package com.gamehubstore.warranty_mscv.controllers;
 import com.gamehubstore.warranty_mscv.models.Warranty;
 import com.gamehubstore.warranty_mscv.models.dtos.WarrantyCloseDTO;
 import com.gamehubstore.warranty_mscv.services.WarrantyService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Tag(name = "Garantías", description = "Procesamiento de reclamos, soporte técnico y devoluciones")
+@SecurityRequirement(name = "bearer-jwt") // 👈 Candado JWT listo
 @RequestMapping("/api/v1/warranties")
 
 public class WarrantyController {
